@@ -35,3 +35,17 @@ export async function authenticateUser(credentials) {
 
   return response.text();
 }
+export async function getUsers() {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${BASE_URL}/list-users`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Não foi possível acessar a lista de users.");
+  }
+
+  return response.json();
+}
