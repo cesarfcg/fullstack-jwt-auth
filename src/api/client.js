@@ -19,3 +19,19 @@ export async function registerUser(user) {
 
   return response.json();
 }
+export async function authenticateUser(credentials) {
+  const basicAuth = btoa(`${credentials.username}:${credentials.password}`);
+  const response = await fetch(`${BASE_URL}/authenticate`, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${basicAuth}`,
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erro ao autenticar usuário");
+  }
+
+  return response.text();
+}
