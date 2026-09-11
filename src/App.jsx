@@ -3,16 +3,18 @@ import { registerUser } from "./api/client.js";
 import "./App.css";
 
 function App() {
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("USER");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     const user = {
-      name,
+      username,
       email,
+      role,
       password,
     };
 
@@ -35,7 +37,7 @@ function App() {
           <input
             type="text"
             className="form-control"
-            value={name}
+            value={username}
             onChange={(event) => setName(event.target.value)}
           />
         </div>
@@ -49,6 +51,18 @@ function App() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Tipo de usuário</label>
+
+          <select
+            className="form-select"
+            value={role}
+            onChange={(event) => setRole(event.target.value)}
+          >
+            <option value="USER">Usuário</option>
+            <option value="ADMIN">Administrador</option>
+          </select>
         </div>
 
         <div className="mb-3">
