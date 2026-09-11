@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../api/client.js";
-
+import { Link } from "react-router-dom";
 function Register() {
   const [username, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -79,6 +79,7 @@ function Register() {
           Criar conta
         </button>
       </form>
+      <Link to="/login">Já tenho uma conta</Link>
     </div>
   );
 }

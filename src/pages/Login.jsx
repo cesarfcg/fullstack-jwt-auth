@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { authenticateUser } from "../api/client.js";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -15,6 +17,8 @@ function Login() {
     try {
       const data = await authenticateUser(credentials);
       console.log("JWT:", data);
+      localStorage.setItem("token", data);
+      navigate("/home");
     } catch (error) {
       console.error(error);
     }
@@ -47,6 +51,8 @@ function Login() {
 
         <button type="submit">Entrar</button>
       </form>
+
+      <Link to="/register">Criar conta</Link>
     </div>
   );
 }
