@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../api/client.js";
-function listUsers() {
+function ListUsers() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     async function loadUsers() {
@@ -24,4 +24,4 @@ function listUsers() {
     </div>
   );
 }
-export default listUsers;
+export default ListUsers;
