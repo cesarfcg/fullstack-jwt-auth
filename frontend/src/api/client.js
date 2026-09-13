@@ -8,7 +8,9 @@ export async function registerUser(user) {
     },
     body: JSON.stringify(user),
   });
-
+  if (response.status === 409) {
+    throw new Error("Usuário já cadastrado.");
+  }
   if (!response.ok) {
     throw new Error("Erro ao cadastrar usuário");
   }

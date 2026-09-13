@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
@@ -21,6 +21,7 @@ function Login() {
       localStorage.setItem("token", data);
       navigate("/dashboard");
     } catch (error) {
+      setError("Credenciais inválidas");
       console.error(error);
     }
   }
@@ -44,6 +45,7 @@ function Login() {
           <button type="submit" className="btn btn-primary w-100">
             Entrar
           </button>
+          {error && <p className="text-danger text-center">{error}</p>}
         </form>
 
         <p className="text-center mt-3 mb-0 small">

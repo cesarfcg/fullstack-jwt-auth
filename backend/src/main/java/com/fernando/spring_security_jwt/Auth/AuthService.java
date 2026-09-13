@@ -1,0 +1,40 @@
+package com.fernando.spring_security_jwt.Auth;
+
+import com.fernando.spring_security_jwt.Security.JwtService;
+import com.fernando.spring_security_jwt.User.User;
+import com.fernando.spring_security_jwt.User.UserRepository;
+import com.fernando.spring_security_jwt.User.UserRequestDto;
+
+import com.fernando.spring_security_jwt.User.UserRole;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
+    public User register(UserRequestDto userRequestDto){
+        User newUser = new User();
+        newUser.setUsername(userRequestDto.username());
+        newUser.setPassword(passwordEncoder.encode(userRequestDto.password()));
+        newUser.setRole(userRequestDto.role());
+        if (userRequestDto.role() == null) {
+            newUser.setRole(UserRole.USER);
+        }
+        if (userRepository.existsByUsername(newUser.getUsername())) {
+            throw new RuntimeException("User already exists");
+        }
+        return userRepository.save(newUser);
+    }
+    public String authenticate(Authentication authentication) {
+        return jwtService.generateToken(authentication);
+    }
+}
