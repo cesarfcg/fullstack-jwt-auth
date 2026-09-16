@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { registerUser } from "../api/client.js";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("USER");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -21,6 +23,7 @@ function Register() {
       const data = await registerUser(user);
 
       console.log(data);
+      navigate("/auth/login");
     } catch (error) {
       console.error(error);
     }
